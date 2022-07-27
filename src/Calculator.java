@@ -1,5 +1,8 @@
+import fourthSolution.Command;
 import secondSolution.Operation;
 import secondSolution.OperationFactory;
+
+import static org.junit.Assert.assertEquals;
 
 public class Calculator {
 
@@ -12,33 +15,30 @@ public class Calculator {
         System.out.println(" =================================== ");
 
 
-        /*
-        1st solution of reducing if st.s in calculate method
-         */
-        System.out.println(" 1st solution for reducing if st.s in calculate method\n ");
-        String operation = "add";
+        String operation = "multiply";
+        System.out.println("operation = " + operation);
         int resultCalculateUsingFactory = new Calculator().calculateUsingFactory(2, 3, operation);
-        System.out.println("operation = " + operation);
         System.out.println("resultCalculateUsingFactory = " + resultCalculateUsingFactory);
         System.out.println(" =================================== ");
-
-        operation="multiply";
-        System.out.println("operation = " + operation);
-        resultCalculateUsingFactory = new Calculator().calculateUsingFactory(2,3,operation);
-        System.out.println("resultCalculateUsingFactory = " + resultCalculateUsingFactory);
-        System.out.println(" =================================== ");
-
 
     }
 
-    private int calculateUsingFactory(int a, int b, String operation) {
+    public int calculateUsingCommandPattern(Command command) {
+        return command.execute();
+    }
+
+    public int calculateUsingEnum(int a, int b, thirdSolution.Operation operation) {
+        return operation.apply(a, b);
+    }
+
+    public int calculateUsingFactory(int a, int b, String operation) {
         Operation targetOperation = OperationFactory
                 .getOperation(operation)
                 .orElseThrow(() -> new IllegalArgumentException("Illegal operation"));
         return targetOperation.apply(a, b);
     }
 
-    private int calculate(int a, int b, String operation) {
+    public int calculate(int a, int b, String operation) {
         int result = Integer.MIN_VALUE;
 
         if (operation.equals("add")) {
